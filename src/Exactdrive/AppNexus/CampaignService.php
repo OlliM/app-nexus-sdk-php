@@ -56,7 +56,8 @@ class CampaignService extends Api
         'lifetime_pacing',
         'daily_budget',
         'lifetime_budget',
-        'daily_budget_imps'
+        'daily_budget_imps',
+        'cadence_modifier_enabled',
     );
 
     //-------------------------------------------------------------------------
@@ -68,7 +69,8 @@ class CampaignService extends Api
      */
     public static function getBaseUrl()
     {
-        $url = Api::getBaseUrl() . '/campaign';
+        $url = Api::getBaseUrl().'/campaign';
+
         return $url;
     }
 
@@ -77,27 +79,30 @@ class CampaignService extends Api
     /**
      * Add a new campaign.
      *
-     * @param  int  $advertiserId => Advertiser id of campaign.
-     * @param  hash $campaign     => Only valid fields will be passed to api.
-     * @return hash $campaign     => Newly created appnexus campaign.
+     * @param  int $advertiserId => Advertiser id of campaign.
+     * @param  array $campaign => Only valid fields will be passed to api.
+     *
+     * @return AppNexusObject $campaign     => Newly created appnexus campaign.
      */
-    public static function addCampaign($advertiserId, $campaign)
+    public static function addCampaign( $advertiserId, $campaign )
     {
         // construct url
-        $url = self::getBaseUrl() . '?' . http_build_query(array(
-            'advertiser_id' => $advertiserId
-        ));
+        $url = self::getBaseUrl().'?'.http_build_query(
+                array(
+                    'advertiser_id' => $advertiserId,
+                )
+            );
 
         // package up the data, don't bother running query on invalid data
-        $data = self::_createCampaignHash($campaign);
+        $data = self::_createCampaignHash( $campaign );
         if ($data == null) {
             return null;
         }
 
         // query app nexus server
-        $response = self::makeRequest($url, Api::POST, $data);
+        $response = self::makeRequest( $url, Api::POST, $data );
 
-        return new AppNexusObject($response, AppNexusObject::MODE_READ_WRITE);
+        return new AppNexusObject( $response, AppNexusObject::MODE_READ_WRITE );
     }
 
     //-------------------------------------------------------------------------
@@ -105,29 +110,32 @@ class CampaignService extends Api
     /**
      * Update an existing campaign.
      *
-     * @param  int  $id           => Id of campaign.
-     * @param  int  $advertiserId => Id of the associated advertiser.
-     * @param  hash $campaign     => Only valid fields will be passed to api.
-     * @return hash $campaign     => Updated appnexus campaign.
+     * @param  int $id => Id of campaign.
+     * @param  int $advertiserId => Id of the associated advertiser.
+     * @param  array $campaign => Only valid fields will be passed to api.
+     *
+     * @return AppNexusObject $campaign     => Updated appnexus campaign.
      */
-    public static function updateCampaign($id, $advertiserId, $campaign)
+    public static function updateCampaign( $id, $advertiserId, $campaign )
     {
         // construct url
-        $url = self::getBaseUrl() . '?' . http_build_query(array(
-            'id'            => $id,
-            'advertiser_id' => $advertiserId
-        ));
+        $url = self::getBaseUrl().'?'.http_build_query(
+                array(
+                    'id'            => $id,
+                    'advertiser_id' => $advertiserId,
+                )
+            );
 
         // package up the data, don't bother running query on invalid data
-        $data = self::_createCampaignHash($campaign);
+        $data = self::_createCampaignHash( $campaign );
         if ($data == null) {
             return null;
         }
 
         // query app nexus server
-        $response = self::makeRequest($url, Api::PUT, $data);
+        $response = self::makeRequest( $url, Api::PUT, $data );
 
-        return new AppNexusObject($response, AppNexusObject::MODE_READ_WRITE);
+        return new AppNexusObject( $response, AppNexusObject::MODE_READ_WRITE );
     }
 
     //-------------------------------------------------------------------------
@@ -135,52 +143,62 @@ class CampaignService extends Api
     /**
      * View all campaigns for an advertiser results are paged.
      *
-     * @param  int   $advertiserId
-     * @return array $campaigns
+     * @param int $advertiserId
+     * @param int $start_element
+     * @param int $num_elements
+     *
+     * @return AppNexusArray $campaigns
      */
-    public static function getAllCampaigns($advertiserId,
-        $start_element = 0, $num_elements = 100)
-    {
+    public static function getAllCampaigns(
+        $advertiserId,
+        $start_element = 0,
+        $num_elements = 100
+    ) {
         // construct url
-        $url = self::getBaseUrl() . '?' . http_build_query(array(
-            'advertiser_id' => $advertiserId,
-            'start_element' => $start_element,
-            'num_elements'  => $num_elements
-        ));
+        $url = self::getBaseUrl().'?'.http_build_query(
+                array(
+                    'advertiser_id' => $advertiserId,
+                    'start_element' => $start_element,
+                    'num_elements'  => $num_elements,
+                )
+            );
 
         // query app nexus server
-        $response = self::makeRequest($url, Api::GET);
+        $response = self::makeRequest( $url, Api::GET );
 
         // wrap response with app nexus object
-        return new AppNexusArray($response, AppNexusObject::MODE_READ_WRITE);
+        return new AppNexusArray( $response, AppNexusObject::MODE_READ_WRITE );
     }
 
     //-------------------------------------------------------------------------
 
     /**
-     * View campaigns speficied by ids, results are paged.
+     * View campaigns specified by ids, results are paged.
      *
-     * @param  array(int) $ids
-     * @return array      $campaigns
+     * @param  int[] $ids
+     *
+     * @return AppNexusArray $campaigns
      */
-    public static function getCampaigns($ids)
+    public static function getCampaigns( $ids )
     {
         // construct url
-        $url = self::getBaseUrl() . '?' . http_build_query(array(
-            'id' => implode(',', $ids)
-        ));
+        $url = self::getBaseUrl().'?'.http_build_query(
+                array(
+                    'id' => implode( ',', $ids ),
+                )
+            );
 
         // query app nexus server
-        $response = self::makeRequest($url, Api::GET);
+        $response = self::makeRequest( $url, Api::GET );
 
         // wrap response to be an array if only single result queried
-        if (count($ids) == 1) {
+        if (count( $ids ) == 1) {
             $key            = $response['dbg_info']['output_term'];
-            $response[$key] = array($response[$key]);
+            $response[$key] = array( $response[$key] );
         }
 
         // wrap response with app nexus object
-        return new AppNexusArray($response, AppNexusObject::MODE_READ_WRITE);
+        return new AppNexusArray( $response, AppNexusObject::MODE_READ_WRITE );
     }
 
     //-------------------------------------------------------------------------
@@ -188,21 +206,24 @@ class CampaignService extends Api
     /**
      * View a specific campaign.
      *
-     * @param  int  $id
-     * @return hash $campaign
+     * @param  int $id
+     *
+     * @return AppNexusObject $campaign
      */
-    public static function getCampaign($id)
+    public static function getCampaign( $id )
     {
         // construct url
-        $url = self::getBaseUrl() . '?' . http_build_query(array(
-            'id' => $id
-        ));
+        $url = self::getBaseUrl().'?'.http_build_query(
+                array(
+                    'id' => $id,
+                )
+            );
 
         // query app nexus server
-        $response = self::makeRequest($url, Api::GET);
+        $response = self::makeRequest( $url, Api::GET );
 
         // wrap response with app nexus object
-        return new AppNexusObject($response, AppNexusObject::MODE_READ_WRITE);
+        return new AppNexusObject( $response, AppNexusObject::MODE_READ_WRITE );
     }
 
     //-------------------------------------------------------------------------
@@ -211,24 +232,31 @@ class CampaignService extends Api
      * Search for campaigns with ids or names containing certain characters,
      *  results are paged.
      *
-     * @param  string $term
-     * @return array  $campaigns
+     * @param string $term
+     * @param int $start_element
+     * @param int $num_elements
+     *
+     * @return AppNexusArray $campaigns
      */
-    public static function searchCampaigns($term,
-        $start_element = 0, $num_elements = 100)
-    {
+    public static function searchCampaigns(
+        $term,
+        $start_element = 0,
+        $num_elements = 100
+    ) {
         // construct url
-        $url = self::getBaseUrl() . '?' . http_build_query(array(
-            'search'        => $term,
-            'start_element' => $start_element,
-            'num_elements'  => $num_elements
-        ));
+        $url = self::getBaseUrl().'?'.http_build_query(
+                array(
+                    'search'        => $term,
+                    'start_element' => $start_element,
+                    'num_elements'  => $num_elements,
+                )
+            );
 
         // query app nexus server
-        $response = self::makeRequest($url, Api::GET);
+        $response = self::makeRequest( $url, Api::GET );
 
         // wrap response with app nexus object
-        return new AppNexusArray($response, AppNexusObject::MODE_READ_WRITE);
+        return new AppNexusArray( $response, AppNexusObject::MODE_READ_WRITE );
     }
 
     //-------------------------------------------------------------------------
@@ -236,20 +264,23 @@ class CampaignService extends Api
     /**
      * Delete a campaign.
      *
-     * @param  int  $id           => Id of campaign.
-     * @param  int  $advertiserId => Advertiser id of campaign.
+     * @param  int $id => Id of campaign.
+     * @param  int $advertiserId => Advertiser id of campaign.
+     *
      * @return bool $status
      */
-    public static function deleteCampaign($id, $advertiserId)
+    public static function deleteCampaign( $id, $advertiserId )
     {
         // construct url
-        $url = self::getBaseUrl() . '?' . http_build_query(array(
-            'id'            => $id,
-            'advertiser_id' => $advertiserId
-        ));
+        $url = self::getBaseUrl().'?'.http_build_query(
+                array(
+                    'id'            => $id,
+                    'advertiser_id' => $advertiserId,
+                )
+            );
 
         // query app nexus server
-        $response = self::makeRequest($url, Api::DELETE);
+        self::makeRequest( $url, Api::DELETE );
 
         return true;
     }
@@ -262,31 +293,32 @@ class CampaignService extends Api
      * Returns a campaign hash containing only the fields which are allowed
      *  to be updated in the format accepted by AppNexus.
      *
-     * @param  hash $campaign
-     * @return hash $campaign
+     * @param  array $campaign
+     *
+     * @return array|object
      */
-    private static function _createCampaignHash($campaign)
+    private static function _createCampaignHash( $campaign )
     {
-        if (is_object($campaign)) {
+        if (is_object( $campaign )) {
             $pruned = new \stdClass();
             foreach (self::$fields as $key) {
-                if (property_exists($campaign, $key)) {
+                if (property_exists( $campaign, $key )) {
                     $pruned->$key = $campaign->$key;
                 }
             }
 
             // return null if no valid fields found
-            return empty($pruned) ? null : (object) array('campaign' => $pruned);
+            return empty( $pruned ) ? null : (object) array( 'campaign' => $pruned );
         } else {
             $pruned = array();
             foreach (self::$fields as $key) {
-                if (array_key_exists($key, $campaign)) {
+                if (array_key_exists( $key, $campaign )) {
                     $pruned[$key] = $campaign[$key];
                 }
             }
 
             // return null if no valid fields found
-            return empty($pruned) ? null : array('campaign' => $pruned);
+            return empty( $pruned ) ? null : array( 'campaign' => $pruned );
         }
     }
 

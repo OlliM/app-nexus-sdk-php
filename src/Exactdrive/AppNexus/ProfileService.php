@@ -124,7 +124,8 @@ class ProfileService extends Api
      */
     public static function getBaseUrl()
     {
-        $url = Api::getBaseUrl() . '/profile';
+        $url = Api::getBaseUrl().'/profile';
+
         return $url;
     }
 
@@ -133,27 +134,30 @@ class ProfileService extends Api
     /**
      * Add a new Profile.
      *
-     * @param  int  $advertiserId => Advertiser id of profile.
-     * @param  hash $profile      => Only valid fields will be passed to api.
-     * @return hash $profile      => Newly created AppNexus profile.
+     * @param  int $advertiserId => Advertiser id of profile.
+     * @param  array $profile => Only valid fields will be passed to api.
+     *
+     * @return AppNexusObject $profile => Newly created AppNexus profile.
      */
-    public static function addProfile($advertiserId, $profile)
+    public static function addProfile( $advertiserId, $profile )
     {
         // construct url
-        $url = self::getBaseUrl() . '?' . http_build_query(array(
-            'advertiser_id' => $advertiserId
-        ));
+        $url = self::getBaseUrl().'?'.http_build_query(
+                array(
+                    'advertiser_id' => $advertiserId,
+                )
+            );
 
         // package up the data, don't bother running query on invalid data
-        $data = self::_createProfileHash($profile);
+        $data = self::_createProfileHash( $profile );
         if ($data == null) {
             return null;
         }
 
         // query app nexus server
-        $response = self::makeRequest($url, Api::POST, $data);
+        $response = self::makeRequest( $url, Api::POST, $data );
 
-        return new AppNexusObject($response, AppNexusObject::MODE_READ_WRITE);
+        return new AppNexusObject( $response, AppNexusObject::MODE_READ_WRITE );
     }
 
     //-------------------------------------------------------------------------
@@ -161,29 +165,32 @@ class ProfileService extends Api
     /**
      * Update an existing Profile.
      *
-     * @param  int  $id           => Id of profile.
-     * @param  int  $advertiserId => Id of the associated advertiser.
-     * @param  hash $profile      => Only valid fields will be passed to api.
-     * @return hash $profile      => Updated AppNexus profile.
+     * @param  int $id => Id of profile.
+     * @param  int $advertiserId => Id of the associated advertiser.
+     * @param  array $profile => Only valid fields will be passed to api.
+     *
+     * @return AppNexusObject $profile => Updated AppNexus profile.
      */
-    public static function updateProfile($id, $advertiserId, $profile)
+    public static function updateProfile( $id, $advertiserId, $profile )
     {
         // construct url
-        $url = self::getBaseUrl() . '?' . http_build_query(array(
-            'id'            => $id,
-            'advertiser_id' => $advertiserId
-        ));
+        $url = self::getBaseUrl().'?'.http_build_query(
+                array(
+                    'id'            => $id,
+                    'advertiser_id' => $advertiserId,
+                )
+            );
 
         // package up the data, don't bother running query on invalid data
-        $data = self::_createProfileHash($profile);
+        $data = self::_createProfileHash( $profile );
         if ($data == null) {
             return null;
         }
 
         // query app nexus server
-        $response = self::makeRequest($url, Api::PUT, $data);
+        $response = self::makeRequest( $url, Api::PUT, $data );
 
-        return new AppNexusObject($response, AppNexusObject::MODE_READ_WRITE);
+        return new AppNexusObject( $response, AppNexusObject::MODE_READ_WRITE );
     }
 
     //-------------------------------------------------------------------------
@@ -191,21 +198,24 @@ class ProfileService extends Api
     /**
      * View all Profiles for an advertiser; results are paged.
      *
-     * @param  int   $advertiserId
-     * @return array $profiles
+     * @param  int $advertiserId
+     *
+     * @return AppNexusArray $profiles
      */
-    public static function getAllProfiles($advertiserId)
+    public static function getAllProfiles( $advertiserId )
     {
         // construct url
-        $url = self::getBaseUrl() . '?' . http_build_query(array(
-            'advertiser_id' => $advertiserId
-        ));
+        $url = self::getBaseUrl().'?'.http_build_query(
+                array(
+                    'advertiser_id' => $advertiserId,
+                )
+            );
 
         // query app nexus server
-        $response = self::makeRequest($url, Api::GET);
+        $response = self::makeRequest( $url, Api::GET );
 
         // wrap response with app nexus object
-        return new AppNexusArray($response, AppNexusObject::MODE_READ_WRITE);
+        return new AppNexusArray( $response, AppNexusObject::MODE_READ_WRITE );
     }
 
     //-------------------------------------------------------------------------
@@ -213,42 +223,48 @@ class ProfileService extends Api
     /**
      * View a specific Advertiser's Profile.
      *
-     * @param  int  $id
-     * @param  int  $advertiserId
-     * @return hash $profile
+     * @param  int $id
+     * @param  int $advertiserId
+     *
+     * @return AppNexusObject $profile
      */
-    public static function getProfile($id, $advertiserId)
+    public static function getProfile( $id, $advertiserId )
     {
         // construct url
-        $url = self::getBaseUrl() . '?' . http_build_query(array(
-            'id'            => $id,
-            'advertiser_id' => $advertiserId
-        ));
+        $url = self::getBaseUrl().'?'.http_build_query(
+                array(
+                    'id'            => $id,
+                    'advertiser_id' => $advertiserId,
+                )
+            );
 
         // query app nexus server
-        $response = self::makeRequest($url, Api::GET);
+        $response = self::makeRequest( $url, Api::GET );
 
         // wrap response with app nexus object
-        return new AppNexusObject($response, AppNexusObject::MODE_READ_WRITE);
+        return new AppNexusObject( $response, AppNexusObject::MODE_READ_WRITE );
     }
 
     /**
      * Delete a specific Advertiser's Profile.
      *
-     * @param  int  $id
-     * @param  int  $advertiserId
-     * @return hash $profile
+     * @param  int $id
+     * @param  int $advertiserId
+     *
+     * @return bool
      */
-    public static function deleteProfile($id, $advertiserId)
+    public static function deleteProfile( $id, $advertiserId )
     {
         // construct url
-        $url = self::getBaseUrl() . '?' . http_build_query(array(
-            'id'            => $id,
-            'advertiser_id' => $advertiserId
-        ));
+        $url = self::getBaseUrl().'?'.http_build_query(
+                array(
+                    'id'            => $id,
+                    'advertiser_id' => $advertiserId,
+                )
+            );
 
         // query app nexus server
-        $response = self::makeRequest($url, Api::DELETE);
+        self::makeRequest( $url, Api::DELETE );
 
         return true;
     }
@@ -263,22 +279,25 @@ class ProfileService extends Api
      * Returns a Profile hash containing only the fields which are allowed
      * to be updated in the format accepted by AppNexus.
      *
-     * @param  hash $profile
-     * @return hash $profile
+     * @param  array $profile
+     *
+     * @return array|object
      */
-    private static function _createProfileHash($profile)
+    private static function _createProfileHash( $profile )
     {
-        if (empty($profile)) return null;
+        if (empty( $profile )) {
+            return null;
+        }
 
         $pruned = new \stdClass();
         foreach (self::$fields as $key) {
-            if (property_exists($profile, $key)) {
+            if (property_exists( $profile, $key )) {
                 $pruned->$key = $profile->$key;
             }
         }
 
         // return null if no valid fields found
-        return empty($pruned) ? null : (object) array('profile' => $pruned);
+        return empty( $pruned ) ? null : (object) array( 'profile' => $pruned );
     }
 
 }
