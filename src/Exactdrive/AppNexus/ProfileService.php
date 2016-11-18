@@ -135,7 +135,7 @@ class ProfileService extends Api
      * Add a new Profile.
      *
      * @param  int $advertiserId => Advertiser id of profile.
-     * @param  array $profile => Only valid fields will be passed to api.
+     * @param  \stdClass $profile => Only valid fields will be passed to api.
      *
      * @return AppNexusObject $profile => Newly created AppNexus profile.
      */
@@ -167,7 +167,7 @@ class ProfileService extends Api
      *
      * @param  int $id => Id of profile.
      * @param  int $advertiserId => Id of the associated advertiser.
-     * @param  array $profile => Only valid fields will be passed to api.
+     * @param  \stdClass $profile => Only valid fields will be passed to api.
      *
      * @return AppNexusObject $profile => Updated AppNexus profile.
      */
@@ -279,7 +279,7 @@ class ProfileService extends Api
      * Returns a Profile hash containing only the fields which are allowed
      * to be updated in the format accepted by AppNexus.
      *
-     * @param  array $profile
+     * @param \stdClass $profile
      *
      * @return array|object
      */
