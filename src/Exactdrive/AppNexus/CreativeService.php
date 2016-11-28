@@ -90,6 +90,7 @@ class CreativeService extends Api
         'native',
         'currency',
         'thirdparty_pixels',
+        'impression_trackers',
     );
 
     //-------------------------------------------------------------------------
