@@ -65,7 +65,7 @@ class ThirdPartyPixelService extends Api
      *
      * @return AppNexusObject $thirdPartyPixel        => Newly created appnexus thirdPartyPixel.
      */
-    public static function addPixel( $advertiserId, $thirdPartyPixel )
+    public static function addThirdPartyPixel( $advertiserId, $thirdPartyPixel )
     {
         // construct url
         $url = self::getBaseUrl().'?'.http_build_query(
@@ -98,7 +98,7 @@ class ThirdPartyPixelService extends Api
      *
      * @return AppNexusObject $thirdPartyPixel        => Updated appnexus thirdPartyPixel.
      */
-    public static function updatePixel( $id, $advertiserId, $thirdPartyPixel )
+    public static function updateThirdPartyPixel( $id, $advertiserId, $thirdPartyPixel )
     {
         // construct url
         $url = self::getBaseUrl().'?'.http_build_query(
@@ -195,7 +195,7 @@ class ThirdPartyPixelService extends Api
      *
      * @return AppNexusObject $thirdPartyPixel
      */
-    public static function getPixel( $id )
+    public static function getThirdPartyPixel( $id )
     {
         // construct url
         $url = self::getBaseUrl().'?'.http_build_query(
@@ -221,7 +221,7 @@ class ThirdPartyPixelService extends Api
      *
      * @return bool $status
      */
-    public static function deletePixel( $id, $advertiserId )
+    public static function deleteThirdPartyPixel( $id, $advertiserId )
     {
         // construct url
         $url = self::getBaseUrl().'?'.http_build_query(
