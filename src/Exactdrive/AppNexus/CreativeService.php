@@ -89,6 +89,7 @@ class CreativeService extends Api
         'competitive_categories',  // creatives associated with the categories in this array will not serve together in /mtj auctions
         'native',
         'currency',
+        'thirdparty_pixels',
     );
 
     //-------------------------------------------------------------------------
