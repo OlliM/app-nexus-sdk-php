@@ -27,43 +27,44 @@ class LineItemService extends Api
      * @var array
      */
     public static $fields = array(
-        'name',                             // name of the line item
-        'advertiser_id',                    // id of the advertiser which the line item belongs
-        'currency',                         // currency used for this line item
-        'code',                             // custom code for the line item.
-        'state',                            // 'active' / 'inactive'
-        'pixels',                           // conversion pixels being used for CPA revenue type
-        'enable_pacing',                    // if true, daily budgeted spend is spread out evenly throughout a day
-        'lifetime_pacing',                  // if true, line item will attempt to spend its overall lifetime budget evenly over line item flight dates
-        'lifetime_pacing_span',             // in event of an underspend event, this indicates the number of days across which underspent amount will be distributed
-        'allow_safety_pacing',              // if true, spend per minute is limited to a maximum of 1% of lifetime budget and 5% of daily budget
-        'start_date',                       // date and time when the line item should start serving
-        'end_date',                         // date and time when the line item should stop serving
-        'lifetime_budget',                  // lifetime budget in revenue
-        'lifetime_budget_imps',             // lifetime budget in impressions
-        'daily_budget',                     // daily budget in revenue
-        'daily_budget_imps',                // daily budget in impressions
-        'revenue_type',                     // way the advertiser has agreed to pay: 'none', 'cpm', 'cpc', 'cpa', 'cost_plus_cpm', 'cost_plus_margin', 'flat_fee'
-        'revenue_value',                    // amount paid to the network by the advertiser
-        'timezone',                         // timezone by which budget and spend are counted
-        'goal_type',                        // the way that the advertiser would like to measure campaign optimization: 'none', 'cpc', 'cpa', 'ctr'
-        'goal_pixels',                      // pixels used for conversion tracking, as well as the post-view and post-click revenue
-        'valuation',                        // the performance goal threshold
-        'creatives',                        // creatives associated with line item
-        'manage_creative',                  // if true, creatives are managed at the line item level. if false, creatives are managed at the campaign level
-        'payout_margin',                    // payout margin on performance offer line items
-        'click_url',                        // click URL to apply at line item level
-        'require_cookie_for_tracking',      // true, a cookie is required for conversion tracking
-        'labels',                           // optional labels applied to the line item: 'Trafficker', 'Sales Rep', 'Line Item Type'
-        'broker_fees',                      // commissions that the network must pass to brokers when serving an ad
-        'profile_id',                       // associate an optional profile_id with line item
-        'insertion_order_id',               // id of the current active insertion order
-        'comments',                         // comments about the line item
-        'is_malicious',                     // if true, then the line item's status will be set to inactive
-        'insertion_orders',                 // objects containing metadata for the insertion orders
-        'flat_fee',                         // flat fees associated with line items
-        'flat_fee.flat_fee_status',         // status of flat fee disbursement
-        'flat_fee.flat_fee_allocation_date' // date when the flat fee revenue is scheduled to be allocated to publishers
+        'name',                                 // name of the line item
+        'advertiser_id',                        // id of the advertiser which the line item belongs
+        'currency',                             // currency used for this line item
+        'code',                                 // custom code for the line item.
+        'state',                                // 'active' / 'inactive'
+        'pixels',                               // conversion pixels being used for CPA revenue type
+        'enable_pacing',                        // if true, daily budgeted spend is spread out evenly throughout a day
+        'lifetime_pacing',                      // if true, line item will attempt to spend its overall lifetime budget evenly over line item flight dates
+        'lifetime_pacing_span',                 // in event of an underspend event, this indicates the number of days across which underspent amount will be distributed
+        'allow_safety_pacing',                  // if true, spend per minute is limited to a maximum of 1% of lifetime budget and 5% of daily budget
+        'start_date',                           // date and time when the line item should start serving
+        'end_date',                             // date and time when the line item should stop serving
+        'lifetime_budget',                      // lifetime budget in revenue
+        'lifetime_budget_imps',                 // lifetime budget in impressions
+        'daily_budget',                         // daily budget in revenue
+        'daily_budget_imps',                    // daily budget in impressions
+        'revenue_type',                         // way the advertiser has agreed to pay: 'none', 'cpm', 'cpc', 'cpa', 'cost_plus_cpm', 'cost_plus_margin', 'flat_fee'
+        'revenue_value',                        // amount paid to the network by the advertiser
+        'timezone',                             // timezone by which budget and spend are counted
+        'goal_type',                            // the way that the advertiser would like to measure campaign optimization: 'none', 'cpc', 'cpa', 'ctr'
+        'goal_pixels',                          // pixels used for conversion tracking, as well as the post-view and post-click revenue
+        'valuation',                            // the performance goal threshold
+        'creatives',                            // creatives associated with line item
+        'manage_creative',                      // if true, creatives are managed at the line item level. if false, creatives are managed at the campaign level
+        'payout_margin',                        // payout margin on performance offer line items
+        'click_url',                            // click URL to apply at line item level
+        'require_cookie_for_tracking',          // true, a cookie is required for conversion tracking
+        'labels',                               // optional labels applied to the line item: 'Trafficker', 'Sales Rep', 'Line Item Type'
+        'broker_fees',                          // commissions that the network must pass to brokers when serving an ad
+        'profile_id',                           // associate an optional profile_id with line item
+        'insertion_order_id',                   // id of the current active insertion order
+        'comments',                             // comments about the line item
+        'is_malicious',                         // if true, then the line item's status will be set to inactive
+        'insertion_orders',                     // objects containing metadata for the insertion orders
+        'flat_fee',                             // flat fees associated with line items
+        'flat_fee.flat_fee_status',             // status of flat fee disbursement
+        'flat_fee.flat_fee_allocation_date',    // date when the flat fee revenue is scheduled to be allocated to publishers
+        'insertion_orders',
     );
 
     //-------------------------------------------------------------------------
