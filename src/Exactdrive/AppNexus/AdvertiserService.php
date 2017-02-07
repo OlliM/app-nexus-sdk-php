@@ -43,6 +43,7 @@ class AdvertiserService extends Api
         'timezone',             // default time zone
         'time_format',          // default time format
         'use_insertion_orders', // see the Insertion Order Service for details
+        'profile_id',           //  a profile set at the advertiser level will apply to all traffic for your advertiser
     );
 
     //-------------------------------------------------------------------------
