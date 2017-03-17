@@ -112,7 +112,8 @@ class ProfileService extends Api
         'mobile_app_instance_action_include', // Whether to include the mobile app instances defined in mobile_app_instance_targets in your campaign targeting.
         'mobile_app_instance_list_targets', // This list contains mobile app instance lists (in other words, it's a list of lists).
         'mobile_app_instance_list_action_include', // Whether to include the mobile app instance lists defined in mobile_app_instance_list_targets in your campaign targeting.
-        'ip_range_list_targets'            // A list of IP address ranges to be included or excluded from campaign targeting.
+        'ip_range_list_targets',            // A list of IP address ranges to be included or excluded from campaign targeting.
+        'exclude_unknown_seller_member_group',
     );
 
     //-------------------------------------------------------------------------

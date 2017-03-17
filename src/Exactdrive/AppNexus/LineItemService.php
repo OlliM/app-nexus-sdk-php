@@ -66,6 +66,9 @@ class LineItemService extends Api
         'flat_fee.flat_fee_allocation_date',
         'insertion_orders',
         'budget_intervals',
+        'creative_distribution_type',
+        'line_item_type',
+        'delivery_goal',
     );
 
     //-------------------------------------------------------------------------
