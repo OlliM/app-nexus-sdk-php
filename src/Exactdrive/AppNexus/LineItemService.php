@@ -70,6 +70,7 @@ class LineItemService extends Api
         'line_item_type',
         'delivery_goal',
         'priority',
+        'publishers_allowed',
     );
 
     //-------------------------------------------------------------------------
