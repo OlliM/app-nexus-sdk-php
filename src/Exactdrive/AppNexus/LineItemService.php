@@ -69,6 +69,7 @@ class LineItemService extends Api
         'creative_distribution_type',
         'line_item_type',
         'delivery_goal',
+        'priority',
     );
 
     //-------------------------------------------------------------------------
