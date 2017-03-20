@@ -59,6 +59,7 @@ class CampaignService extends Api
         'daily_budget_imps',
         'cadence_modifier_enabled',
         'priority',
+        'creative_distribution_type',
     );
 
     //-------------------------------------------------------------------------
