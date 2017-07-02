@@ -20,11 +20,11 @@ class ForecastInventory extends Api
      *
      * @var array
      */
-    public static $fields = array(
+    public static $fields = [
         'start_date',
         'end_date',
         'profile',
-    );
+    ];
 
     /**
      * AppNexus report service url.
@@ -74,7 +74,7 @@ class ForecastInventory extends Api
      */
     private static function _createForecastHash($forecast)
     {
-        $pruned = array();
+        $pruned = [];
         foreach (self::$fields as $key) {
             if (array_key_exists($key, $forecast)) {
                 $pruned[$key] = $forecast[$key];
@@ -82,6 +82,6 @@ class ForecastInventory extends Api
         }
 
         // return null if no valid fields found
-        return empty($pruned) ? null : array('line_item' => $pruned);
+        return empty($pruned) ? null : ['line_item' => $pruned, 'campaigns' => []];
     }
 }
