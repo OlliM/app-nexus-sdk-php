@@ -41,7 +41,8 @@ class ForecastInventory extends Api
      *
      * @param $forecast
      *
-     * @return AppNexusObject|int
+     * @return array|int
+     * @throws \Exception
      */
     public static function getForecast($forecast)
     {
@@ -57,7 +58,7 @@ class ForecastInventory extends Api
         // query app nexus server
         $response = self::makeRequest($url, Api::POST, $data);
 
-        return new AppNexusObject($response, AppNexusObject::MODE_READ_WRITE);
+        return $response;
     }
 
     //-------------------------------------------------------------------------
